@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StopWatch</title>
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+    <div class="container">
+        <div id="fields">
+            <div id="min">00</div>
+            <span class="dot">:</span>
+            <div id="sec">00</div>
+            <span class="dot">.</span>
+            <div id="msec">00</div>
+        </div>
+        <div class="play-pause">
+            <div id="play">
+                <button id="play-btn" class="btn"><img src="pause.png" height="100%" width="100%"></button>
+                <button id="pause-btn" class="btn"><img src="play.png"  height="100%" width="100%"></button>
+               
+            </div>
+            <button id="stop-btn"><div id="stop"></div></button>
+            <!-- <button id="reset" class="btn">Reset</button> -->
+        </div>
+    </div>
+    <script>
+        let min=document.getElementById("min");
+        let sec=document.getElementById("sec");
+        let msec=document.getElementById("msec");
+        let playBtn=document.getElementById("play-btn");
+        let pauseBtn=document.getElementById("pause-btn");
+        let stopBtn=document.getElementById("stop-btn");
+        let resetBtn=document.getElementById("stop-btn");
+
+        min.innerHTML="00"
+        sec.innerHTML="00"
+        msec.innerHTML="00"
+
+        let  seconds=0;
+        let  milliseconds=0;
+        let minutes=0;
+        
+        pauseBtn.addEventListener('click',play);
+        playBtn.addEventListener('click',pause);
+        resetBtn.addEventListener('click',reset)
+        
+
+        function reset(){
+            pause()
+            min.innerHTML="00";
+            sec.innerHTML="00";
+            msec.innerHTML="00";
+            seconds=0;
+            milliseconds=0;
+            minutes=0;
+            resetBtn.style.visibility="hidden"
+        }
+
+        let playing=false;
+
+        function play(){
+            pauseBtn.style.display="none";
+            playBtn.style.display="block";
+            stopBtn.style.visibility="visible"
+
+            playing=setInterval(function(){
+                milliseconds++;
+                if(milliseconds==100){
+                    seconds++;
+                    milliseconds=0;
+                    sec.innerHTML=`${seconds}`
+                }
+                if(seconds==60){
+                    minutes++;
+                    min.innerHTML=null;
+                    min.innerHTML+=`${minutes}`
+                    seconds=0;
+                }
+                msec.innerHTML=`${milliseconds}`
+            },10);
+        }
+
+        function pause(e){
+            pauseBtn.style.display="block";
+            playBtn.style.display="block";
+            clearInterval(playing);
+        }
+        
+    </script>
+</body>
+</html>
